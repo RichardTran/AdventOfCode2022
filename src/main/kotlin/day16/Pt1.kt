@@ -1,0 +1,7 @@
+package day16
+
+fun main() {
+
+    {}.javaClass.getResourceAsStream("/day3/input.txt")?.bufferedReader()?.readLines()
+
+}
