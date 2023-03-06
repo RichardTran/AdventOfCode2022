@@ -27,7 +27,7 @@ fun main() {
         "C X" to 7,
         "C Y" to 2,
         "C Z" to 6
-    );
+    )
     var totalScore = 0
 
     {}.javaClass.getResourceAsStream("/day2/input.txt")?.bufferedReader()?.readLines()?.forEach{
