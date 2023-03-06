@@ -1,7 +1,5 @@
 package day9
 
-import java.lang.RuntimeException
-
 /**
  * https://adventofcode.com/2022/day/9
  */
@@ -11,44 +9,8 @@ fun main() {
         ?.map { it.split(" ") }
         ?.map { inputToVector(it[0], it[1]) }
 
-    vectors?.let { solve(it) }
+    vectors?.let { solve(9, it) }
 }
-
-/**
- * Observations:
- * - If H moves into a square around T or on T, then T doesn't move.
- * - If H moves into a square not around T, then T moves into H's previous location
- */
-private fun solve(vectors: List<Vector>) {
-    val numOfTails = 9
-
-    val tailKnots = (0 until numOfTails).map {
-        Coordinate(0, 0)
-    }
-    val rope = KnotRope(head = Coordinate(0,0), tailKnots = tailKnots)
-
-    val tailVisited: MutableSet<Coordinate> = mutableSetOf(Coordinate(0,0))
-    vectors.forEach {vector ->
-        println(vector)
-        tailVisited.addAll(rope.moveAndLogEndTailMovements(vector).toSet())
-        println(tailVisited)
-    }
-    println("The answer is: ${tailVisited.size}")
-}
-
-private fun inputToVector(direction: String, scalarString: String): Vector {
-    val scalar = Integer.parseInt(scalarString)
-    return when(direction) {
-        "U" -> Vector(0, 1, scalar) // Up
-        "D" -> Vector(0, -1, scalar) // Down
-        "L" -> Vector(-1, 0, scalar) // Left
-        "R" -> Vector(1, 0, scalar) // Right
-        else -> {
-            throw RuntimeException("Unexpected direction -- $direction")
-        }
-    }
-}
-
 
 /**
  * --- Part Two ---

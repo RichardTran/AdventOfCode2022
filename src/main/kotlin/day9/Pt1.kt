@@ -5,6 +5,9 @@ import kotlin.math.abs
 
 /**
  * https://adventofcode.com/2022/day/9
+ *
+ * Not proud of the work here - here rope knots and coords could be separated to not have to copy the data object
+ * to store coords.
  */
 fun main() {
     val lines = {}.javaClass.getResourceAsStream("/day9/input.txt")?.bufferedReader()?.readLines()
@@ -12,7 +15,7 @@ fun main() {
         ?.map { it.split(" ") }
         ?.map { inputToVector(it[0], it[1]) }
 
-    vectors?.let { solve(it) }
+    vectors?.let { solve(1, it) }
 }
 
 /**
@@ -20,8 +23,7 @@ fun main() {
  * - If H moves into a square around T or on T, then T doesn't move.
  * - If H moves into a square not around T, then T moves into H's previous location
  */
-private fun solve(vectors: List<Vector>) {
-    val numOfTails = 1
+fun solve(numOfTails: Int, vectors: List<Vector>) {
     val tailKnots = (0 until numOfTails).map {
         Coordinate(0, 0)
     }
@@ -36,7 +38,7 @@ private fun solve(vectors: List<Vector>) {
     println("The answer is: ${tailVisited.size}")
 }
 
-private fun inputToVector(direction: String, scalarString: String): Vector {
+fun inputToVector(direction: String, scalarString: String): Vector {
     val scalar = Integer.parseInt(scalarString)
     return when(direction) {
         "U" -> Vector(0, 1, scalar) // Up
@@ -72,7 +74,6 @@ data class Coordinate(var x: Int, var y: Int) {
 
 data class Vector(val x: Int, val y: Int, val scalar: Int)
 
-
 data class KnotRope(var head: Coordinate, var tailKnots: List<Coordinate>) {
 
     /**
@@ -80,24 +81,26 @@ data class KnotRope(var head: Coordinate, var tailKnots: List<Coordinate>) {
      * the tail always moves one step diagonally to keep up:
      */
     fun moveAndLogEndTailMovements(vector: Vector): List<Coordinate> {
-        val visited: MutableList<Coordinate> = mutableListOf(tailKnots[tailKnots.size - 1].copy())
+        val tailVisitedCoords: MutableList<Coordinate> = mutableListOf(tailKnots[tailKnots.size - 1].copy())
         for (i in 0 until vector.scalar) {
             var path = moveHead(vector)
             for (knot in tailKnots) {
                 path = moveKnot(path, knot)
             }
-            visited.add(tailKnots[tailKnots.size - 1].copy())
-            println("knotlocations -- $vector")
-            println("head -- $head")
-            for (j in tailKnots.indices) {
-                println("${j + 1} -- ${tailKnots[j]}")
-            }
 
-            // Debugging
-            //prettyPrint(head, tailKnots)
-            println()
+            tailVisitedCoords.add(tailKnots[tailKnots.size - 1].copy())
+
+            /* Debugging
+                println("knotlocations -- $vector")
+                println("head -- $head")
+                for (j in tailKnots.indices) {
+                    println("${j + 1} -- ${tailKnots[j]}")
+                }
+                prettyPrint(head, tailKnots)
+                println()
+            */
         }
-        return visited
+        return tailVisitedCoords
     }
 
     private fun moveHead(vector: Vector): MutableList<Coordinate> {
@@ -105,6 +108,35 @@ data class KnotRope(var head: Coordinate, var tailKnots: List<Coordinate>) {
         head.move(vector.x, vector.y)
         headPath.add(head.copy())
         return headPath
+    }
+
+    /**
+     * We determine if tail moves into head's OLD location if the head's NEW location is not a neighbor
+     *
+     * [parentKnotPath] index 0 is the starting location and index 1 is the destination
+     */
+    private fun moveKnot(parentKnotPath: MutableList<Coordinate>, currentKnot: Coordinate): MutableList<Coordinate> {
+        val tailPath: MutableList<Coordinate> = mutableListOf(currentKnot.copy())
+        if (parentKnotPath.size > 1) { // if size is 1, it means the previous knot did not move and its path is where it already was
+            if (currentKnot.isNotNeighbor(parentKnotPath[1])) {
+                val parentsDestinationCoord = parentKnotPath[1]
+
+                // Vectors in this problem always move in 8 directions (up, down, left, right or diagonal)
+                val destVectorX = if (parentsDestinationCoord.x != currentKnot.x) {
+                    (parentsDestinationCoord.x - currentKnot.x) / abs(parentsDestinationCoord.x - currentKnot.x)
+                } else { 0 }
+
+                val destVectorY = if (parentsDestinationCoord.y != currentKnot.y) {
+                    (parentsDestinationCoord.y - currentKnot.y) / abs(parentsDestinationCoord.y - currentKnot.y)
+                } else { 0 }
+
+                val destinationVector = Vector(x = destVectorX, y = destVectorY, scalar = 1)
+
+                currentKnot.move(destinationVector.x, destinationVector.y)
+                tailPath.add(currentKnot.copy())
+            }
+        }
+        return tailPath
     }
 
     /**
@@ -127,34 +159,6 @@ data class KnotRope(var head: Coordinate, var tailKnots: List<Coordinate>) {
             }
             println()
         }
-    }
-
-    /**
-     * We determine if tail moves into head's OLD location if the head's NEW location is not a neighbor
-     *
-     * [parentKnotPath] index 0 is the starting location and index 1 is the destination
-     */
-    private fun moveKnot(parentKnotPath: MutableList<Coordinate>, currentKnot: Coordinate): MutableList<Coordinate> {
-        val tailPath: MutableList<Coordinate> = mutableListOf(currentKnot.copy())
-        if (parentKnotPath.size > 1) { // if size is 1, it means the previous knot did not move and its path is where it already was
-            if (currentKnot.isNotNeighbor(parentKnotPath[1])) {
-                // check if new location is diagonal
-                val parentsDestinationCoord = parentKnotPath[1]
-
-                val destX = if (parentsDestinationCoord.x != currentKnot.x) {
-                    (parentsDestinationCoord.x - currentKnot.x) / abs(parentsDestinationCoord.x - currentKnot.x)
-                } else { 0 }
-
-                val destY = if (parentsDestinationCoord.y != currentKnot.y) {
-                    (parentsDestinationCoord.y - currentKnot.y) / abs(parentsDestinationCoord.y - currentKnot.y)
-                } else { 0 }
-
-                val diagonalVector = Vector(x = destX, y = destY, scalar = 1)
-                currentKnot.move(diagonalVector.x, diagonalVector.y)
-                tailPath.add(currentKnot.copy())
-            }
-        }
-        return tailPath
     }
 }
 /**
