@@ -1,19 +1,111 @@
 package day11
 
+import java.lang.RuntimeException
+
 fun main() {
+    val monkeys = parse("/day11/input.txt")
+    for (i in 0 until 20) {
+        for (monkey in monkeys) {
+            monkey.inspectItemsAndPassToOtherMonkeys(monkeys)
+        }
+    }
 
-    var mutab
-    {}.javaClass.getResourceAsStream("/day11/input.txt")?.bufferedReader()?.readLines()
+    val answer = monkeys
+        .sortedBy{ it.totalInspections }
+        .subList(monkeys.size - 2, monkeys.size)
+        .map { it.totalInspections }
+        .fold(1) { acc, num -> acc * num }
 
+    println("The answer is $answer")
 }
 
+fun parse(resource: String): List<Monkey> {
+    val lines = {}.javaClass.getResourceAsStream(resource)?.bufferedReader()?.readLines()
+    val linesToReadAtATime = 7
+
+    val monkeys: MutableList<Monkey> = mutableListOf()
+    if (lines != null) {
+        for (i in 0 .. lines.size / linesToReadAtATime) {
+            val items = parseStartingItems(lines[linesToReadAtATime * i + 1])
+            val op = parseOperation(lines[linesToReadAtATime * i + 2])
+            val divisibleTest = Integer.parseInt(parseTest(lines[linesToReadAtATime * i + 3]))
+            val monkeyIfTrue = Integer.parseInt(parseTrue(lines[linesToReadAtATime * i + 4]))
+            val monkeyIfFalse = Integer.parseInt(parseFalse(lines[linesToReadAtATime * i + 5]))
+
+            monkeys.add(
+                Monkey(
+                    currentItems = items.map { Item(Integer.parseInt(it)) }.toMutableList(),
+                    operation = op,
+                    divisibleTest = parseConditions(divisibleTest, monkeyIfTrue, monkeyIfFalse)
+                )
+            )
+        }
+    } else {
+        throw RuntimeException("Unable to parse")
+    }
+    return monkeys
+}
+
+fun parseStartingItems(line: String): List<String> {
+    return line.substringAfter("Starting items: ").split(", ")
+}
+
+fun parseOperation(line: String): (Item) -> Int {
+    val operationString = line
+        .substringAfter("Operation: new = old ")
+        .split(" ")
+
+    return when {
+        operationString[0] == "+" && isNumber(operationString[1]) -> {
+                item: Item -> item.worry + Integer.parseInt(operationString[1])
+        }
+        operationString[0] == "*" && isNumber(operationString[1]) -> {
+                item: Item -> item.worry * Integer.parseInt(operationString[1])
+        }
+        operationString[0] == "+" -> {
+                item: Item -> item.worry + item.worry
+        }
+        operationString[0] == "*" -> {
+                item: Item -> item.worry * item.worry
+        }
+        else -> {
+            throw RuntimeException("Unexpected operation")
+        }
+    }
+}
+
+fun parseConditions(divisibleTest: Int, monkeyIfTrue: Int, monkeyIfFalse: Int): (Item) -> Int {
+    return { item: Item->
+        if (item.worry % divisibleTest == 0) {
+            monkeyIfTrue
+        } else {
+            monkeyIfFalse
+        }
+    }
+}
+
+fun parseTest(line: String): String {
+    return line.substringAfter("Test: divisible by ")
+}
+
+fun parseTrue(line: String): String {
+    return line.substringAfter("If true: throw to monkey ")
+}
+
+fun parseFalse(line: String): String {
+    return line.substringAfter("If false: throw to monkey ")
+}
+
+fun isNumber(s: String): Boolean {
+    return s.all { Character.isDigit(it) }
+}
 
 /**
  * [operation]:
  *
  * Example new = old * 5 -- old being before inspection. New is after inspection
  *
- * [test]: decide where to throw an item next
+ * [divisibleTest]: decide where to throw an item next
  *
  * After each monkey inspects an item but before it tests your worry level,
  * your relief that the monkey's inspection didn't damage the item causes your worry level
@@ -38,9 +130,20 @@ fun main() {
  */
 
 data class Monkey(
-    val startingItems: List<Item>,
-    val operation: (Int) -> Int,
-    val test: (Int) -> (Boolean) -> Int // Divide worry by 3(floor) then test | worry level -> boolean -> which monkey
-)
+    val currentItems: MutableList<Item>,
+    val operation: (Item) -> Int,
+    val divisibleTest: (Item) -> Int,
+    var totalInspections: Int = 0
+) {
+    fun inspectItemsAndPassToOtherMonkeys(monkeys: List<Monkey>) {
+        while (currentItems.isNotEmpty()) {
+            val item = currentItems.removeFirst()
+            totalInspections++
 
-data class Item(val worry: Int)
+            item.worry = this.operation(item) / 3
+            monkeys[divisibleTest(item)].currentItems.add(item)
+        }
+    }
+}
+
+data class Item(var worry: Int)
