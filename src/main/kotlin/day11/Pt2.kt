@@ -1,15 +1,24 @@
 package day11
 
+import day0.forEachIndexed
 import java.lang.RuntimeException
 
 fun main() {
-    val strategies = listOf(1, 100, 1_000, 10_000, 100_000, 100_000_000)
+    val answers: Map<Int, List<Int>> = parseExampleAnswers()
 
-    for (strategy in strategies) {
+    val rounds = listOf(1, 20, 1000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10_000)
+
+
+//    for (strategy in strategies) {
         val monkeys = parseExtreme("/day11/input.txt")
-        for (i in 0 until 20) {
+
+        for (i in 1 .. 10000) {
             for (monkey in monkeys) {
-                monkey.inspectItemsAndPassToOtherMonkeys(monkeys, strategy)
+                monkey.inspectItemsAndPassToOtherMonkeys(monkeys, 1)
+            }
+            if (i in rounds) {
+                // check
+                println("$i -- Expected: ${answers[i]}, Actual: ${monkeys.map { it.totalInspections }}")
             }
         }
         val answer = monkeys
@@ -18,30 +27,31 @@ fun main() {
             .map { it.totalInspections }
             .fold(1L) { acc, num -> acc * num }
 
-        println("strategy -- $strategy")
+    //    println("strategy -- $strategy")
         monkeys
             .forEachIndexed { index, monkey ->
                 println("$index -- ${monkey.totalInspections} -- ${monkey.currentItems}")
             }
-        println()
-    }
+        println(answer)
+  //  }
 
 }
 
-fun parseExampleAnswers(resource: String) {
+fun parseExampleAnswers(): Map<Int, List<Int>> {
     val lines = {}.javaClass.getResourceAsStream("/day11/example_pt2.txt")?.bufferedReader()?.readLines()
     val linesToReadAtATime = 6
+    val mutableMap: MutableMap<Int, List<Int>> = mutableMapOf()
     if (lines != null) {
         for (i in 0 .. lines.size / linesToReadAtATime) {
-            val round = lines[linesToReadAtATime * i + 0].substringAfter("== After round ").substringBefore(" times.")
+            val round = lines[linesToReadAtATime * i + 0].substringAfter("== After round ").substringBefore(" ==")
             val m1 = lines[linesToReadAtATime * i + 1].substringAfter("inspected items ").substringBefore(" times.").let { Integer.parseInt(it) }
             val m2 = lines[linesToReadAtATime * i + 2].substringAfter("inspected items ").substringBefore(" times.").let { Integer.parseInt(it) }
             val m3 = lines[linesToReadAtATime * i + 3].substringAfter("inspected items ").substringBefore(" times.").let { Integer.parseInt(it) }
             val m4 = lines[linesToReadAtATime * i + 4].substringAfter("inspected items ").substringBefore(" times.").let { Integer.parseInt(it) }
+            mutableMap[Integer.parseInt(round)] = listOf(m1, m2, m3, m4)
         }
-
     }
-
+    return mutableMap
 }
 
 fun parseExtreme(resource: String): List<MonkeyExtreme> {
@@ -78,16 +88,16 @@ fun parseExtremeOperation(line: String): (ItemExtreme) -> Long {
 
     return when {
         operationString[0] == "+" && isNumber(operationString[1]) -> {
-                item: ItemExtreme -> item.worry + operationString[1].toLong()
+                item: ItemExtreme -> (item.worry + operationString[1].toLong()) % 9_699_690
         }
         operationString[0] == "*" && isNumber(operationString[1]) -> {
-                item: ItemExtreme -> item.worry * operationString[1].toLong()
+                item: ItemExtreme -> (item.worry * operationString[1].toLong()) % 9_699_690
         }
         operationString[0] == "+" -> {
-                item: ItemExtreme -> item.worry + item.worry
+                item: ItemExtreme -> (item.worry + item.worry) % 9_699_690
         }
         operationString[0] == "*" -> {
-                item: ItemExtreme -> item.worry * item.worry
+                item: ItemExtreme -> (item.worry * item.worry) % 9_699_690
         }
         else -> {
             throw RuntimeException("Unexpected operation")
@@ -149,18 +159,7 @@ data class MonkeyExtreme(
             val item = currentItems.removeFirst()
             totalInspections++
 
-            val newWorry = this.operation(item)
-            item.worry = this.operation(item) / 1
-            // strategy
-            /*
-            if (newWorry < 0) {
-                item.worry = item.worry - Integer.MAX_VALUE
-                item.worry = this.operation(item)
-            } else {
-                item.worry = newWorry
-            }
-            */
-
+            item.worry = this.operation(item)
             monkeys[divisibleTest(item)].currentItems.add(item)
         }
     }

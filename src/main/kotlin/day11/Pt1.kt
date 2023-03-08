@@ -57,16 +57,16 @@ fun parseOperation(line: String): (Item) -> Int {
 
     return when {
         operationString[0] == "+" && isNumber(operationString[1]) -> {
-                item: Item -> item.worry + Integer.parseInt(operationString[1])
+                item: Item -> (item.worry + Integer.parseInt(operationString[1])) / 3
         }
         operationString[0] == "*" && isNumber(operationString[1]) -> {
-                item: Item -> item.worry * Integer.parseInt(operationString[1])
+                item: Item -> (item.worry * Integer.parseInt(operationString[1])) / 3
         }
         operationString[0] == "+" -> {
-                item: Item -> item.worry + item.worry
+                item: Item -> (item.worry + item.worry) / 3
         }
         operationString[0] == "*" -> {
-                item: Item -> item.worry * item.worry
+                item: Item -> (item.worry * item.worry) / 3
         }
         else -> {
             throw RuntimeException("Unexpected operation")
@@ -140,7 +140,7 @@ data class Monkey(
             val item = currentItems.removeFirst()
             totalInspections++
 
-            item.worry = this.operation(item) / 3
+            item.worry = this.operation(item)
             monkeys[divisibleTest(item)].currentItems.add(item)
         }
     }
