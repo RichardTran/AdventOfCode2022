@@ -14,6 +14,8 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1")
+    // dependency for jackson json
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.3")
     testImplementation(kotlin("test"))
 }
 

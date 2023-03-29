@@ -1,0 +1,181 @@
+[ {
+  "mealType" : "breakfast",
+  "meal" : "Scrambled eggs with toast",
+  "instruction" : "Whisk eggs with milk, salt, and pepper, and cook in a non-stick skillet until fluffy. Serve with toast and butter."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Overnight oats",
+  "instruction" : "Combine rolled oats, milk, Greek yogurt, honey, and vanilla extract in a jar and refrigerate overnight. Top with fresh fruit and nuts in the morning."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Avocado toast",
+  "instruction" : "Mash avocado with lime juice, salt, and pepper and spread on toast. Top with a fried egg or cherry tomatoes."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Breakfast burrito",
+  "instruction" : "Scramble eggs with sausage, peppers, onions, and cheese, and wrap in a tortilla. Serve with salsa and sour cream."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Pancakes with fruit",
+  "instruction" : "Mix pancake batter and add in blueberries or sliced bananas. Cook on a griddle and serve with maple syrup."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Breakfast sandwich",
+  "instruction" : "Fry an egg and place it on a toasted English muffin with bacon, cheese, and arugula."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Yogurt parfait",
+  "instruction" : "Layer Greek yogurt with granola and fresh berries or sliced bananas."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Breakfast quesadilla",
+  "instruction" : "Fill a tortilla with scrambled eggs, ham, and cheese, and cook in a non-stick skillet until cheese is melted."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Smoothie bowl",
+  "instruction" : "Blend frozen fruit, Greek yogurt, and almond milk until smooth and thick. Top with granola and fresh fruit."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Shakshuka",
+  "instruction" : "Simmer eggs in a spicy tomato sauce with onions, bell peppers, and cumin. Serve with crusty bread."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Quiche",
+  "instruction" : "Mix eggs, milk, cheese, and cooked bacon or vegetables and pour into a pie crust. Bake until golden and set."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Belgian waffles",
+  "instruction" : "Mix waffle batter and cook in a Belgian waffle iron. Serve with whipped cream and fresh berries."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Huevos rancheros",
+  "instruction" : "Fry eggs and place on top of tortillas with refried beans, salsa, and avocado slices."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Bagel with cream cheese",
+  "instruction" : "Toast a bagel and spread with cream cheese. Top with smoked salmon and capers."
+}, {
+  "mealType" : "breakfast",
+  "meal" : "Frittata",
+  "instruction" : "Whisk eggs with cheese, vegetables, and herbs, and cook in a non-stick skillet until set. Cut into wedges and serve with toast."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Grilled cheese and tomato soup",
+  "instruction" : "Grill cheese between two slices of bread and serve with a bowl of tomato soup."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Tuna salad sandwich",
+  "instruction" : "Mix canned tuna with mayonnaise, diced celery, and pickles. Serve on bread with lettuce and tomato."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Caesar salad",
+  "instruction" : "Toss romaine lettuce with Caesar dressing, croutons, and Parmesan cheese. Add grilled chicken for protein."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Chicken quesadilla",
+  "instruction" : "Fill a tortilla with shredded chicken, cheese, and vegetables, and cook in a non-stick skillet until cheese is melted."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Club sandwich",
+  "instruction" : "Layer sliced turkey, ham, bacon, lettuce, and tomato on toasted bread with mayonnaise."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Caprese salad",
+  "instruction" : "Layer sliced tomatoes, fresh mozzarella, and basil. Drizzle with balsamic vinegar and olive oil."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Chickpea salad",
+  "instruction" : "Mix chickpeas with diced vegetables, feta cheese, and a lemon vinaigrette."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Baked potato",
+  "instruction" : "Top a baked potato with shredded cheese, sour cream, and chives. Add bacon or chili for extra flavor."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Hummus and veggie wrap",
+  "instruction" : "Spread hummus on a tortilla and add sliced vegetables like cucumber, carrot, and bell pepper. Roll up and slice."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Falafel wrap",
+  "instruction" : "Fill a pita with falafel, lettuce, tomato, and tzatziki sauce."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Pasta salad",
+  "instruction" : "Mix cooked pasta with chopped vegetables, olives, feta cheese, and Italian dressing."
+}, {
+  "mealType" : "lunch",
+  "meal" : "BLT sandwich",
+  "instruction" : "Layer bacon, lettuce, and tomato on bread with mayonnaise."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Veggie burger",
+  "instruction" : "Grill a veggie patty and serve on a bun with lettuce, tomato, and avocado."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Sushi roll",
+  "instruction" : "Fill sushi rice with avocado, cucumber, and cooked shrimp or crab. Serve with soy sauce and wasabi."
+}, {
+  "mealType" : "lunch",
+  "meal" : "Greek salad",
+  "instruction" : "Toss lettuce with feta cheese, olives, red onion, and a lemon vinaigrette. Add grilled chicken or shrimp for protein."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Grilled chicken with roasted vegetables",
+  "instruction" : "Season chicken with herbs and grill until cooked through. Serve with roasted vegetables like zucchini, squash, and bell peppers."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Spaghetti and meatballs",
+  "instruction" : "Cook spaghetti according to package instructions and serve with homemade or store-bought meatballs and marinara sauce."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Fish tacos",
+  "instruction" : "Grill or bake fish and serve in corn tortillas with shredded cabbage, salsa, and avocado."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Beef stir-fry",
+  "instruction" : "Stir-fry sliced beef with vegetables like broccoli, bell peppers, and onions. Serve over rice."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Stuffed bell peppers",
+  "instruction" : "Fill bell peppers with cooked rice, ground beef or turkey, and diced vegetables. Bake until peppers are tender."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Roasted salmon with asparagus",
+  "instruction" : "Season salmon fillets with lemon and herbs and roast in the oven. Serve with roasted asparagus."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Chicken curry",
+  "instruction" : "Cook chicken in a spicy curry sauce with vegetables like carrots, potatoes, and peas. Serve over rice."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Fajitas",
+  "instruction" : "Grill or sauté sliced steak, chicken, or vegetables and serve with tortillas, salsa, and guacamole."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Beef stew",
+  "instruction" : "Cook beef with vegetables like carrots, potatoes, and onions in a rich beef broth until tender."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Baked lasagna",
+  "instruction" : "Layer cooked lasagna noodles with ricotta cheese, tomato sauce, and ground beef. Top with mozzarella cheese and bake until bubbly."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Shepherd's pie",
+  "instruction" : "Layer cooked ground beef or lamb with mashed potatoes and bake until golden brown."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Veggie stir-fry",
+  "instruction" : "Stir-fry a variety of vegetables like broccoli, carrots, snow peas, and mushrooms. Serve over rice or noodles."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Grilled shrimp skewers",
+  "instruction" : "Season shrimp with garlic and herbs and grill on skewers. Serve with a side salad."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Baked chicken parmesan",
+  "instruction" : "Bread chicken breasts with breadcrumbs and Parmesan cheese and bake until crispy. Serve with marinara sauce and spaghetti."
+}, {
+  "mealType" : "dinner",
+  "meal" : "Black bean chili",
+  "instruction" : "Cook black beans with ground beef or turkey, diced tomatoes, and chili powder. Serve with shredded cheese and sour cream."
+} ]
